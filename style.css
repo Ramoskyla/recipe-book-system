@@ -1,0 +1,52 @@
+:root {
+    --primary-color: #28a745;
+    --card-bg: #f8f9fa;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #fff;
+}
+
+.hero-section {
+    background-image: url('images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+}
+
+.hero-section input {
+    max-width: 600px;
+}
+
+.recipe-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.recipe-card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.category-buttons .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#detailScreen img {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+}

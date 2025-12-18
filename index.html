@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Recipe Book</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">My Recipe Book</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" id="navButtons">
+          <li class="nav-item">
+            <button class="btn btn-light me-2" id="loginBtn">Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-light" id="registerBtn">Register</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Screen -->
+  <div id="homeScreen">
+    <!-- Hero Section -->
+    <section class="hero-section text-white text-center py-5">
+      <div class="container">
+        <h1 class="display-4 fw-bold">Delicious Recipes for Every Meal</h1>
+        <p class="lead">Discover, create, and manage your favorite recipes easily.</p>
+        <input type="text" id="searchInput" class="form-control mt-3 w-50 mx-auto" placeholder="Search recipes...">
+      </div>
+    </section>
+
+    <!-- Category Buttons -->
+    <section class="category-buttons text-center my-4">
+      <button class="btn btn-outline-success me-2 mb-2" onclick="filterCategory('All')">All</button>
+      <button class="btn btn-outline-success me-2 mb-2" onclick="filterCategory('Breakfast')">Breakfast</button>
+      <button class="btn btn-outline-success me-2 mb-2" onclick="filterCategory('Lunch')">Lunch</button>
+      <button class="btn btn-outline-success me-2 mb-2" onclick="filterCategory('Dinner')">Dinner</button>
+      <button class="btn btn-outline-success mb-2" onclick="filterCategory('Dessert')">Dessert</button>
+    </section>
+
+    <!-- Recipe Cards -->
+    <main class="container mb-3">
+      <div class="row g-4" id="recipeList"></div>
+    </main>
+
+    <!-- Pagination -->
+    <nav class="d-flex justify-content-center my-3">
+      <ul class="pagination" id="pagination"></ul>
+    </nav>
+  </div>
+
+  <!-- Detail Screen -->
+  <div id="detailScreen" class="d-none container py-4">
+    <button class="btn btn-secondary mb-3" id="backBtn">← Back</button>
+    <div class="card mb-3" id="detailCard">
+      <img id="detailImage" class="card-img-top" src="" alt="">
+      <div class="card-body">
+        <h3 id="detailName"></h3>
+        <p><strong>Category:</strong> <span id="detailCategory"></span></p>
+        <p><strong>Ingredients:</strong><br><span id="detailIngredients"></span></p>
+        <p><strong>Instructions:</strong><br><span id="detailInstructions"></span></p>
+        <div class="mt-2" id="detailButtons"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <!-- Recipe Modal -->
+  <div class="modal fade" id="recipeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Add Recipe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="recipeForm">
+            <input type="hidden" id="recipeId">
+            <div class="mb-3">
+              <label for="recipeName" class="form-label">Recipe Name</label>
+              <input type="text" class="form-control" id="recipeName" required>
+            </div>
+            <div class="mb-3">
+              <label for="recipeCategory" class="form-label">Category</label>
+              <select id="recipeCategory" class="form-select" required>
+                <option value="">Select Category</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="recipeIngredients" class="form-label">Ingredients (one per line)</label>
+              <textarea class="form-control" id="recipeIngredients" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="recipeInstructions" class="form-label">Instructions</label>
+              <textarea class="form-control" id="recipeInstructions" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="recipeImage" class="form-label">Image URL (optional)</label>
+              <input type="url" class="form-control" id="recipeImage">
+            </div>
+            <button type="submit" class="btn btn-success">Save Recipe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="loginUsername" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Register</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="registerForm">
+            <div class="mb-3">
+              <label for="regUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="regUsername" required>
+            </div>
+            <div class="mb-3">
+              <label for="regPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="regPassword" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
